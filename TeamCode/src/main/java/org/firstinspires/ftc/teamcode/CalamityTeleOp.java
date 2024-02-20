@@ -8,18 +8,17 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-
 @TeleOp
 public class CalamityTeleOp extends OpMode {
-    HardwareCalamity robot = new HardwareCalamity(this);
+    // Init
 
+    HardwareCalamity robot = new HardwareCalamity(this);
+    boolean toggleSpin1, toggleTrapdoor1, toggleDeposit, toggleWrist1 = true;
+    boolean toggleSpin2, toggleTrapdoor2, togglePickup, toggleWrist2 = false;
     @Override
     public void init() {
-
         robot.init(hardwareMap);
         robot.initMotors();
-
 ////        robot.rightLift.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 ////        robot.leftLift.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 //        robot.arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -31,14 +30,16 @@ public class CalamityTeleOp extends OpMode {
 ////        robot.rightLift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 ////        robot.leftLift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 //        robot.arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-
     }
 
-    boolean toggleSpin1, toggleTrapdoor1, toggleDeposit, toggleWrist1 = true;
-    boolean toggleSpin2, toggleTrapdoor2, togglePickup, toggleWrist2 = false;
-
+    //Main Code
     @Override
     public void loop() {
+
+        //Functions
+
+
+        // Driving
 
         if (gamepad1.left_stick_button) {
             robot.FR.setPower(-gamepad1.left_stick_y - gamepad1.left_stick_x - gamepad1.right_stick_x);
@@ -76,19 +77,11 @@ public class CalamityTeleOp extends OpMode {
             toggleTrapdoor1 = true;
         }
 
+
+
         if (gamepad1.y && toggleDeposit == true) {
             togglePickup = !togglePickup;
             robot.sleep(500);
-            robot.arm.setTargetPosition(togglePickup ? 0 : -6400);
-            robot.arm.setPower(togglePickup ? -1 : 1);
-//            robot.rightLift.setTargetPosition(togglePickup ? 0 : 1000);
-//            robot.leftLift.setTargetPosition(togglePickup ? 0 : 1000);
-//            robot.setLiftPower(togglePickup ? 0 : 1);
-//            robot.sleep(2000);
-//            if (robot.arm.getCurrentPosition() > -6000) {
-//                robot.wrist1.setPosition(togglePickup ? 0 : 1);
-//                robot.wrist2.setPosition(togglePickup ? -1 : 1);
-//            }
             toggleDeposit = false;
         } else if (!toggleDeposit) {
             toggleDeposit = true;
