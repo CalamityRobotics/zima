@@ -94,6 +94,7 @@ public class HardwareCalamity {
         leftLift.setPower(slide);
     }
 
+
 //    public void liftForCounts( int counts, double liftPower)
 //    {
 //        int slide1counts = 0, slide2counts = 0;
